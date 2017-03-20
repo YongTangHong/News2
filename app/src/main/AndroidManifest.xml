@@ -15,7 +15,8 @@
 
         </activity>
         <activity android:name=".news.activity.WizardActivity"/>
-        <activity android:name=".news.activity.MainActivity">
+        <activity android:name=".news.activity.MainActivity"
+                  android:theme="@style/StyledIndicators">
             <intent-filter >
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER"/>
