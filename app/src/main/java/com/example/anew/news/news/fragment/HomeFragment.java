@@ -124,8 +124,9 @@ public class HomeFragment extends BaseFragment {
                         }
                     }
                 });
-
-
+                //发送网络请求
+                tabPage.loadDataFragment();
+                
                 return tabPage;
             }
         });

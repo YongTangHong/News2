@@ -6,12 +6,21 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.Volley;
+import com.example.anew.news.news.bean.CategoriesBean;
+import com.example.anew.news.news.network.NewsRequest;
+
 /**
  * Created by Administrator on 2017/3/19.
  */
 
 public class NewCenterTabPage extends TabPage {
     private static final String TAG = "NewCenterTabPage";
+    private CategoriesBean mCategoriesBean;
+
     public NewCenterTabPage(Context context) {
         super(context);
     }
@@ -30,6 +39,7 @@ public class NewCenterTabPage extends TabPage {
             case 0:
                // textView.setText("新闻");
                 NewsPage newsPage = new NewsPage(getContext());
+                newsPage.setData(mCategoriesBean.getData().get(0)); //设置新闻数据
                 view = newsPage;
                 break;
             case 1:
@@ -47,8 +57,41 @@ public class NewCenterTabPage extends TabPage {
                 hudong.setText("互动");
                 view = hudong;
                 break;
+
         }
         mFrameLayout.removeAllViews();
         mFrameLayout.addView(view);
     }
+        //实现父类方法,加载新闻中心的数据
+
+
+    @Override
+    public void loadDataFragment() {
+       //创建一个网络请
+        String url = "http://10.0.2.2:8080/zhbj/categories.json";
+        NewsRequest<CategoriesBean> newsRequest = new NewsRequest<CategoriesBean>(Request.Method.GET, CategoriesBean.class,url,null,mListener,mErrorListener);
+        //发送网络请求
+        Volley.newRequestQueue(getContext()).add(newsRequest);
+    }
+        //正确的监听
+    private Response.Listener<CategoriesBean> mListener = new Response.Listener<CategoriesBean>() {
+
+
+
+            @Override
+        public void onResponse(CategoriesBean response) {
+           // Log.d(TAG, "onResponse: "+response.getData().get(0).getTitle());
+            //网络数据获取后,默认切换到新闻页面
+                mCategoriesBean = response; //保存网络结果
+                onMenuSwitch(0);
+
+        }
+    };
+    //错误的监听
+    private Response.ErrorListener mErrorListener = new Response.ErrorListener() {
+        @Override
+        public void onErrorResponse(VolleyError error) {
+            Log.d(TAG, "onErrorResponse: ");
+        }
+    };
 }

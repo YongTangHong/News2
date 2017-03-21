@@ -97,6 +97,14 @@ public class TabPage extends RelativeLayout {
         mFrameLayout.addView(textView);
     }
 
+    /**
+     * 因为每个页面可能都要加载数据,所以在基类封装,由子类各自实现加载数据
+     */
+    public void loadDataFragment() {
+
+
+    }
+
 
     //通知外界tabpage的变化
     public interface OnTabPageChangeListener {

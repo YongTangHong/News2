@@ -21,6 +21,7 @@ public class SettingTabPage extends TabPage {
 
     @Override
     public void onMenuSwitch(int position) {
+
         Log.d(TAG, "onMenuSwitch: "+position);
     }
 }

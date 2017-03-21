@@ -9,6 +9,7 @@ import android.util.Log;
  */
 
 public class HomeTabPage extends TabPage {
+
     private static final String TAG = "HomeTabPage";
     
     public HomeTabPage(Context context) {
@@ -21,6 +22,7 @@ public class HomeTabPage extends TabPage {
 
     @Override
     public void onMenuSwitch(int position) {
+
         Log.d(TAG, "onMenuSwitch: "+position);
     }
 }
