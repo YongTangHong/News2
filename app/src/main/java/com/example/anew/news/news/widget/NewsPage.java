@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.example.anew.news.R;
+import com.example.anew.news.news.app.Constans;
 import com.example.anew.news.news.bean.CategoriesBean;
 import com.viewpagerindicator.TabPageIndicator;
 
@@ -66,6 +67,8 @@ public class NewsPage extends RelativeLayout {
             container.addView(textView);
             return textView;*/
             NewsPullToRefreshlistView newsPullToRefreshlistView = new NewsPullToRefreshlistView(getContext());
+            String url = Constans.Host +mData.getChildren().get(position).getUrl();
+            newsPullToRefreshlistView.setUrl(url);
             container.addView(newsPullToRefreshlistView);
             return newsPullToRefreshlistView;
 
@@ -81,6 +84,7 @@ public class NewsPage extends RelativeLayout {
         //返回页面的标题
         @Override
         public CharSequence getPageTitle(int position) {
+
             //return CONTENT[position];
           return  mData.getChildren().get(position).getTitle();
         }

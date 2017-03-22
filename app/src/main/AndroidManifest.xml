@@ -8,13 +8,15 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:name=".news.app.NewsApplication">
         <activity android:name=".news.activity.SplashActivity" >
 
 
 
 
         </activity>
+        <activity android:name=".news.activity.NewsDataActivity"/>
         <activity android:name=".news.activity.WizardActivity"/>
         <activity android:name=".news.activity.MainActivity"
                   android:theme="@style/StyledIndicators">

@@ -29,8 +29,8 @@ public class NewsRequest<T> extends JsonRequest<T> {
      * @param listener   接口回调
      * @param errorListener   网络错误的回调
      */
-    public NewsRequest(int method,Class clazz, String url, String requestBody, Response.Listener listener, Response.ErrorListener errorListener) {
-        super(method, url, requestBody, listener, errorListener);
+    public NewsRequest(Class clazz, String url,NetsWorkListeren<T> listener) {
+        super(Method.GET,url,null,listener,listener);
         mClass = clazz;
     }
 

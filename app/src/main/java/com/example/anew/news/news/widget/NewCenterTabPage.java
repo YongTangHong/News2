@@ -6,11 +6,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.Volley;
 import com.example.anew.news.news.bean.CategoriesBean;
+import com.example.anew.news.news.network.NetWorkManger;
+import com.example.anew.news.news.network.NetsWorkListeren;
 import com.example.anew.news.news.network.NewsRequest;
 
 /**
@@ -32,12 +31,12 @@ public class NewCenterTabPage extends TabPage {
 
     @Override
     public void onMenuSwitch(int position) {
-        Log.d(TAG, "onMenuSwitch: "+position);
+        Log.d(TAG, "onMenuSwitch: " + position);
         //TextView textView = new TextView(getContext());
         View view = null;
         switch (position) {
             case 0:
-               // textView.setText("新闻");
+                // textView.setText("新闻");
                 NewsPage newsPage = new NewsPage(getContext());
                 newsPage.setData(mCategoriesBean.getData().get(0)); //设置新闻数据
                 view = newsPage;
@@ -62,18 +61,36 @@ public class NewCenterTabPage extends TabPage {
         mFrameLayout.removeAllViews();
         mFrameLayout.addView(view);
     }
-        //实现父类方法,加载新闻中心的数据
+    //实现父类方法,加载新闻中心的数据
 
 
     @Override
     public void loadDataFragment() {
-       //创建一个网络请
+        //创建一个网络请
         String url = "http://10.0.2.2:8080/zhbj/categories.json";
-        NewsRequest<CategoriesBean> newsRequest = new NewsRequest<CategoriesBean>(Request.Method.GET, CategoriesBean.class,url,null,mListener,mErrorListener);
+        NewsRequest<CategoriesBean> newsRequest = new NewsRequest<CategoriesBean>(CategoriesBean.class, url, mWorkListeren);
         //发送网络请求
-        Volley.newRequestQueue(getContext()).add(newsRequest);
+       // Volley.newRequestQueue(getContext()).add(newsRequest);
+        NetWorkManger.sendRequest(newsRequest);
     }
-        //正确的监听
+
+    private NetsWorkListeren<CategoriesBean> mWorkListeren = new NetsWorkListeren<CategoriesBean>(){
+        @Override
+        public void onResponse(CategoriesBean response) {
+            mCategoriesBean = response;
+            //保存网络结果
+            onMenuSwitch(0);
+        }
+
+        @Override
+        public void onErrorResponse(VolleyError error) {
+            super.onErrorResponse(error);
+        }
+    };
+
+
+
+    /*      //正确的监听
     private Response.Listener<CategoriesBean> mListener = new Response.Listener<CategoriesBean>() {
 
 
@@ -94,4 +111,5 @@ public class NewCenterTabPage extends TabPage {
             Log.d(TAG, "onErrorResponse: ");
         }
     };
+}*/
 }
